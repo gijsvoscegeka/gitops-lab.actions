@@ -14,6 +14,7 @@ env:
   AZURE_RG: RG3
   AZURE_SUBSCRIPTION: <<Subscription ID>>
   AZURE-LOCATION: WestEurope
+  configuration: release
 
 jobs:
   build:
@@ -21,10 +22,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Sources
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
     - name: Setup .NET
-      uses: actions/setup-dotnet@v2.0.0
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 10.0.x
     - name: Restore dependencies
@@ -35,5 +35,3 @@ jobs:
       run: dotnet test --no-build --verbosity normal --configuration ${{ env.configuration }}
     - name: Publish 
       run: dotnet publish --configuration ${{ env.configuration }} --output ${{runner.temp }}/publish
-
-      
